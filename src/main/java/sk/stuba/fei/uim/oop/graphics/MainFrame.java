@@ -12,6 +12,7 @@ public class MainFrame extends JFrame implements ActionListener {
     private JLabel text;
     private PaintPanel panel;
     private int i;
+    private JPanel bckrnd;
 
     public MainFrame() {
         super("Peciatkaren");
@@ -39,13 +40,14 @@ public class MainFrame extends JFrame implements ActionListener {
         cesta = new MainButton("Cesta");
         cesta.addActionListener(this);
         text = new JLabel("Aktualne zvolene");
-
+        bckrnd = new JPanel();
         panel = new PaintPanel(strom, dom, cesta);
 
+        bckrnd.add(text);
         menu.add(strom);
         menu.add(dom);
         menu.add(cesta);
-        menu.add(text);
+        menu.add(bckrnd);
         this.add(menu, BorderLayout.PAGE_START);
         this.add(panel);
 
@@ -65,19 +67,24 @@ public class MainFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        panel.setColor(moveColor());
+        Color c = moveColor();
+        panel.setColor(c);
+        bckrnd.setBackground(c);
         if (actionEvent.getActionCommand().equals("Strom")){
             strom.setPressed(true);
             cesta.setPressed(false);
             dom.setPressed(false);
+            text.setText("Peciatka Strom");
         }else if (actionEvent.getActionCommand().equals("Dom")){
             dom.setPressed(true);
             strom.setPressed(false);
             cesta.setPressed(false);
+            text.setText("Peciatka Dom");
         }else if (actionEvent.getActionCommand().equals("Cesta")){
             cesta.setPressed(true);
             dom.setPressed(false);
             strom.setPressed(false);
+            text.setText("kreslis ciaru");
         }
     }
 }
